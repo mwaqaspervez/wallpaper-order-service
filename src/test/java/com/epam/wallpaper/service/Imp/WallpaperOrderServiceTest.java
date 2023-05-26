@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,6 +45,18 @@ public class WallpaperOrderServiceTest {
         assertEquals(2, result.size());
         assertEquals(result.get(0).getArea(), Integer.valueOf(24));
         assertEquals(result.get(1).getArea(), Integer.valueOf(23));
+    }
+
+    @Test
+    public void getAllAreas_isEmpty() {
+
+        Mockito.when(fileReader.getResult())
+                .thenReturn(new ArrayList<>());
+        wallpaperOrderService = new WallpaperOrderServiceImp(fileReader);
+        List<WallpaperResponse> result = wallpaperOrderService.getAllAreas();
+
+        assertNotNull(result);
+        assertEquals(0, result.size());
     }
 
     @Test
