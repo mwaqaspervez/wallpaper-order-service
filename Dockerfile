@@ -5,6 +5,6 @@ RUN mvn -f /home/app/pom.xml clean package
 
 
 FROM openjdk:17-jdk-slim
-COPY --from=build /home/app/target/recommendation-0.0.1-SNAPSHOT.jar /usr/local/lib/recommendation-service.jar
+COPY --from=build /home/app/target/wallpaper-0.0.1-SNAPSHOT.jar /usr/local/lib/wallpaper.jar
 EXPOSE 8080
-ENTRYPOINT ["java","-jar","/usr/local/lib/recommendation-service.jar"]
+ENTRYPOINT ["java","-jar","/usr/local/lib/wallpaper.jar"]

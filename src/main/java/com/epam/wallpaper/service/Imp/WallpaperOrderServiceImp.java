@@ -1,21 +1,24 @@
-package com.epam.wallpaper.service;
+package com.epam.wallpaper.service.Imp;
 
 import com.epam.wallpaper.Util.FileReader;
-import com.epam.wallpaper.model.Room;
 import com.epam.wallpaper.model.WallpaperResponse;
+import com.epam.wallpaper.model.Room;
+import com.epam.wallpaper.service.WallpaperOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class WallpaperOrderService {
+public class WallpaperOrderServiceImp implements WallpaperOrderService {
 
     private final List<Room> roomsList;
 
-    public WallpaperOrderService(FileReader fileReader) {
+    public WallpaperOrderServiceImp(FileReader fileReader) {
         roomsList = fileReader.getResult();
     }
 
@@ -24,25 +27,18 @@ public class WallpaperOrderService {
                 .map(record -> {
                     int area = record.calculateArea();
 
-                    int totalWallpaperRequired = area +
-                            calculateSmallest(record.getLength(), record.getWidth(), record.getHeight());
+                    int totalWallpaperRequired = area + record.calculateSmallest();
 
                     return new WallpaperResponse(record.toString(), totalWallpaperRequired, null);
                 }).collect(Collectors.toList());
     }
 
     public List<WallpaperResponse> getCubicShapes() {
-        log.info("Sorted Cubic values");
         return this.roomsList.stream()
                 // filter those values which has equal sides
                 .filter(r -> r.getHeight() == r.getLength() &&
                         r.getLength() == r.getWidth())
-                .sorted((o1, o2) -> {
-                    // sort them in descending order
-                    int area1 = o1.calculateArea();
-                    int area2 = o2.calculateArea();
-                    return Integer.compare(area2, area1);
-                })
+                .sorted(Comparator.comparing(Room::getLength).reversed())
                 .map(r -> new WallpaperResponse(r.toString(),
                         r.calculateArea(), null))
                 .collect(Collectors.toList());
@@ -60,15 +56,6 @@ public class WallpaperOrderService {
                 .map(k -> new WallpaperResponse(k.getKey().toString(),
                         k.getKey().calculateArea(), k.getValue()))
                 .collect(Collectors.toList());
-    }
-
-    private int calculateSmallest(int length, int width, int height) {
-        // if the length is smaller than width then return
-        // smaller value from length and height
-        if (length < width) {
-            return Math.min(length, height);
-        }
-        return Math.min(width, height);
     }
 
 }

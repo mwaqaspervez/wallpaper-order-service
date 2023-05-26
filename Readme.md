@@ -15,18 +15,18 @@ Once the above process completes, Your api server will be running on port ``8080
 
 ### Endpoints
 
-#### Get the list of cryptocurrencies use:
+#### Get the list of wallpaper order
 
 ``curl --location --request GET 'http://localhost:8080/api/orders' \
 --header 'Content-Type: application/json' \
 ``
 
-#### Get a single cryptocurrency use:
+#### Get the list of cubic rooms
 
 `` curl --location --request GET 'http://localhost:8080/api/orders/cubes' ``
 
 
-#### Get highest normalized cryptocurrency:
+#### Get the list of duplicate values
 
 
 `` curl --location --request GET 'http://localhost:8080/api/pi/orders/duplicates' ``

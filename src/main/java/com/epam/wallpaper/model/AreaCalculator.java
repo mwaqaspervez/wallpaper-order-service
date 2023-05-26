@@ -1,4 +1,4 @@
-package com.epam.recommendation.model;
+package com.epam.wallpaper.model;
 
 public interface AreaCalculator {
 

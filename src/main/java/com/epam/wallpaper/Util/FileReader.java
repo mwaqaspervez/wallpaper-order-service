@@ -1,25 +1,32 @@
-package com.epam.recommendation.Util;
+package com.epam.wallpaper.Util;
 
-import com.epam.recommendation.model.Room;
-import jakarta.annotation.PostConstruct;
+import com.epam.wallpaper.model.Room;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Component
 @Slf4j
-public class FileReader {
+public class FileReader implements Runnable {
 
-    private final List<Room> result = new ArrayList<>();
+    private final List<Room> result;
     private static final int LENGTH_INDEX = 0;
     private static final int WIDTH_INDEX = 1;
     private static final int HEIGHT_INDEX = 2;
 
-    @PostConstruct
+    public FileReader(){
+        result = new ArrayList<>();
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.execute(this);
+    }
+    @Override
     public void run() {
         String fileContent = readFile();
         String[] lines = fileContent.split(System.lineSeparator());
@@ -33,7 +40,7 @@ public class FileReader {
     private String readFile() {
         StringBuilder sb = new StringBuilder();
         ClassPathResource resource = new ClassPathResource("sample-input.txt");
-        try (BufferedReader br = new BufferedReader(new java.io.FileReader(resource.getFile()))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()))) {
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);
