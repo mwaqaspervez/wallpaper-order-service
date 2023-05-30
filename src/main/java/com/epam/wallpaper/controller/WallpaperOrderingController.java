@@ -20,10 +20,9 @@ public class WallpaperOrderingController {
     }
 
     /**
-     * Find the normalized value of a crypto provided by the
-     * requested date.
+     * Find the wallpaper orders that needs to be requested.
      *
-     * @return The name of the cryptocurrency with the highest normalized value.
+     * @return List of Wallpaper object containing dimension and area.
      */
     @GetMapping("/orders")
     public ResponseEntity<List<WallpaperResponse>> getArea() {

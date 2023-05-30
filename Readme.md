@@ -29,4 +29,4 @@ Once the above process completes, Your api server will be running on port ``8080
 #### Get the list of duplicate values
 
 
-`` curl --location --request GET 'http://localhost:8080/api/pi/orders/duplicates' ``
+`` curl --location --request GET 'http://localhost:8080/api/orders/duplicates' ``

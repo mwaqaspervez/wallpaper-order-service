@@ -42,14 +42,14 @@ public class WallpaperOrderingControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        List<WallpaperResponse> cryptoStats = objectMapper.readValue(
+        List<WallpaperResponse> response = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<>() {
                 }
         );
 
-        assertNotNull(cryptoStats);
-        assertFalse(cryptoStats.isEmpty());
+        assertNotNull(response);
+        assertFalse(response.isEmpty());
     }
 
     @Test
@@ -62,14 +62,14 @@ public class WallpaperOrderingControllerTest {
                 .andDo(print())
                 .andReturn();
 
-        List<WallpaperResponse> cryptoStats = objectMapper.readValue(
+        List<WallpaperResponse> response = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<>() {
                 }
         );
 
-        assertNotNull(cryptoStats);
-        assertFalse(cryptoStats.isEmpty());
+        assertNotNull(response);
+        assertFalse(response.isEmpty());
     }
 
     @Test
@@ -82,14 +82,14 @@ public class WallpaperOrderingControllerTest {
                 .andDo(print())
                 .andReturn();
 
-        List<WallpaperResponse> cryptoStats = objectMapper.readValue(
+        List<WallpaperResponse> response = objectMapper.readValue(
                 mvcResult.getResponse().getContentAsString(),
                 new TypeReference<>() {
                 }
         );
 
-        assertNotNull(cryptoStats);
-        assertFalse(cryptoStats.isEmpty());
+        assertNotNull(response);
+        assertFalse(response.isEmpty());
     }
 
     private static List<WallpaperResponse> getTestData() {
