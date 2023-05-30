@@ -9,7 +9,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
-public class Room implements AreaCalculator {
+public class Room {
 
     private int length;
     private int width;
@@ -46,12 +46,4 @@ public class Room implements AreaCalculator {
         return Objects.hash(length, width, height);
     }
 
-    @Override
-    public int calculateArea() {
-        // area is calculated as
-        // 2 * length * width + 2 * width * height + 2 * height * length.
-        return (2 * this.length * this.width) +
-                (2 * this.width * this.height) +
-                (2 * this.height * this.length);
-    }
 }

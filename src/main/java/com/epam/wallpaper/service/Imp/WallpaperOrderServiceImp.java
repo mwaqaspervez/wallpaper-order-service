@@ -2,6 +2,7 @@ package com.epam.wallpaper.service.Imp;
 
 import com.epam.wallpaper.Util.FileReader;
 import com.epam.wallpaper.model.CubicRoom;
+import com.epam.wallpaper.model.RectangularRoom;
 import com.epam.wallpaper.model.WallpaperResponse;
 import com.epam.wallpaper.model.Room;
 import com.epam.wallpaper.service.WallpaperOrderService;
@@ -25,16 +26,15 @@ public class WallpaperOrderServiceImp implements WallpaperOrderService {
 
     public List<WallpaperResponse> getAllAreas() {
         return this.roomsList.stream()
-                .map(this::getWallpaperResponse)
+                .map(record -> new RectangularRoom(record.getLength(), record.getWidth(), record.getHeight()))
+                .map(record -> {
+                    int area = record.calculateArea();
+
+                    int totalWallpaperRequired = area + record.calculateSmallest();
+
+                    return new WallpaperResponse(record.toString(), totalWallpaperRequired, null);
+                })
                 .collect(Collectors.toList());
-    }
-
-    private WallpaperResponse getWallpaperResponse(Room record) {
-        int area = record.calculateArea();
-
-        int totalWallpaperRequired = area + record.calculateSmallest();
-
-        return new WallpaperResponse(record.toString(), totalWallpaperRequired, null);
     }
 
     public List<WallpaperResponse> getCubicShapes() {
@@ -44,7 +44,13 @@ public class WallpaperOrderServiceImp implements WallpaperOrderService {
                         r.getLength() == r.getWidth())
                 .map(r -> new CubicRoom(r.getLength(), r.getWidth(), r.getHeight()))
                 .sorted(Comparator.comparing(Room::getLength).reversed())
-                .map(this::getWallpaperResponse)
+                .map(record -> {
+                    int area = record.calculateArea();
+
+                    int totalWallpaperRequired = area + record.calculateSmallest();
+
+                    return new WallpaperResponse(record.toString(), totalWallpaperRequired, null);
+                })
                 .collect(Collectors.toList());
     }
 
